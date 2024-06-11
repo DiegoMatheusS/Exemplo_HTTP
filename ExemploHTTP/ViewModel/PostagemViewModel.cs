@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ExemploHTTP.ViewModel
@@ -15,37 +14,22 @@ namespace ExemploHTTP.ViewModel
     {
         private readonly RestService _restService;
 
-        public PostagemViewModel() // instanciando o RestService
+        [ObservableProperty]
+        private ObservableCollection<Postagem> _postagens = new ObservableCollection<Postagem>();
+
+
+        public PostagemViewModel()
         {
             _restService = new RestService();
-            GetPostagensAsyncCommand = new Command(async () => GetPostagemsAsync());
+            GetPostagensAsyncCommand = new Command(async () => await GetPostagensAsync());
         }
-
-        [ObservableProperty]
-        private int _userId;
-
-        [ObservableProperty]
-        private int _id;
-
-        [ObservableProperty]
-        private string _title;
-
-        [ObservableProperty]
-        private string _body;
-
 
         public ICommand GetPostagensAsyncCommand { get; }
 
-        public ObservableCollection<Postagem> _postagens = new ObservableCollection<Postagem>(); // para fazer colecao
-        public ObservableCollection<Postagem> Postagens
+        public async Task GetPostagensAsync()
         {
-            get { return _postagens; }
-            set { _postagens = value; }
+            Postagens = await _restService.GetPostagensAsync();
         }
 
-        public async Task  GetPostagemsAsync()
-        {
-            Postagens = await _restService.GetPostagemsAsync();
-        }
     }
 }

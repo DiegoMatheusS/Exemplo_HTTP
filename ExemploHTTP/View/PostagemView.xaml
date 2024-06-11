@@ -5,28 +5,29 @@
              Title="PostagemView">
     <VerticalStackLayout>
 
-        <CollectionView ItemsSource="{Binding Postage}" EmptyView="Não tem os Dados" >
+        <CollectionView ItemsSource="{Binding Postagens}" EmptyView="Não tem os Dados" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout>
                         <HorizontalStackLayout>
                             <Label
-                                Text="UserId"/>
+                                Text="UserId:"/>
                             <Label
                                 Text="{Binding UserId}"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout>
                             <Label
-                                Text="Title"
+                                
+                                Text="Title:"
                                 FontSize="Large"/>
                             <Label
                                 Text="{Binding Title}"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout>
                             <Label
-                                Text="Body"/>
+                                Text="Body:"/>
                             <Label
-                                Text="{Binding Body-}"/>
+                                Text="{Binding Body}"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </DataTemplate>

@@ -8,6 +8,5 @@ public partial class PostagemView : ContentPage
 	{
 		BindingContext = new PostagemViewModel();
 		InitializeComponent();
-
 	}
 }

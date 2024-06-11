@@ -1,4 +1,5 @@
 ﻿using ExemploHTTP.Models;
+using Microsoft.Maui.Platform;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,39 +18,37 @@ namespace ExemploHTTP
 
         public ObservableCollection<Postagem> Postagens { get; set; }
 
-        public RestService()
+        public RestService() // construtor
         {
             Postagens = null;
-            _client = new HttpClient(); //instanciando
+            _client = new HttpClient();//instaciei  _client
             _serializerOptions = new JsonSerializerOptions
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase, //primeira letra minuscula (CamelCase)
-                WriteIndented = true //identação
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
             };
         }
-        public async Task<ObservableCollection<Postagem>> GetPostagemsAsync() //Faz o get para visualizar
+        //Método para buscar Informação
+        public async Task<ObservableCollection<Postagem>> GetPostagensAsync()//Tarefa = 'Task'// É uma lista que devolve 
         {
-            Postagens = new ObservableCollection<Postagem>(); // ira fazer nova lista de postagem, pega o que tem na model Postagem
+            Postagens = new ObservableCollection<Postagem>();
 
-            Uri uri = new Uri("https://jsonplaceholder.typicode.com/posts");
-            //tentar buscar a informcao da Uri /\
-
+            Uri uri = new Uri("https://jsonplaceholder.typicode.com/posts");// onde vou buscar informação "endereço" 'URL'
 
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(uri); //pega resposta do uri
+                HttpResponseMessage response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    string content = await response.Content.ReadAsStringAsync(); //pega conteudo e le como string
+                    string content = await response.Content.ReadAsStringAsync();
                     Postagens = JsonSerializer.Deserialize<ObservableCollection<Postagem>>(content, _serializerOptions);
                 }
-               
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
-            return Postagens ??[];
+            return Postagens ?? [];
         }
-     }
+    }
 }
